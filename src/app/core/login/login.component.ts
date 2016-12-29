@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'toastr-ng2';
 
 import { AuthService } from '../shared/auth.service';
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -36,6 +38,7 @@ export class LoginComponent implements OnInit {
       (success) => {
         this.loginForm.reset();
         this.toastrService.success('Welcome back!', 'Đăng nhập thành công');
+        this.router.navigate(['/quay-so']);
       }
     ).catch((error: string) => this.toastrService.error(error, 'Opps!'));
   }
