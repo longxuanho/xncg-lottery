@@ -5,7 +5,7 @@ import { LoginComponent } from './core/login/login.component';
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'bang-tin' },
     { path: 'dang-nhap', component: LoginComponent },
-    { path: 'quay-xo-so', loadChildren: 'app/+lottery/lottery.module#LotteryModule'},
+    { path: 'quay-so', loadChildren: 'app/+lottery/lottery.module#LotteryModule'},
     { path: 'thiet-lap', loadChildren: 'app/+preferences/preferences.module#PreferencesModule' }
 ];
 

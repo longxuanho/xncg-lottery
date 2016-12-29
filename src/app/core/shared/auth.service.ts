@@ -23,6 +23,10 @@ export class AuthService {
     return this.auth;
   }
 
+  isAuth() {
+    return !!this.auth.data;
+  }
+
   login(credential: Credential) {
     return new Promise<FirebaseAuthState>((resolve, reject) => {
       this.af.auth.login({

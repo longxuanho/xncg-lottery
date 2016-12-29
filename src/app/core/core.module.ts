@@ -32,7 +32,10 @@ import { AuthService } from './shared/auth.service';
   ],
   exports: [
     ToastrModule,
-    AngularFireModule
+    AngularFireModule,
+    LoginComponent,
+    LogoutComponent,
+    NavbarComponent,
   ]
 })
 export class CoreModule {
