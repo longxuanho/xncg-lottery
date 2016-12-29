@@ -6,6 +6,7 @@ const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'bang-tin' },
     { path: 'dang-nhap', component: LoginComponent },
     { path: 'quay-so', loadChildren: 'app/+lottery/lottery.module#LotteryModule'},
+    { path: 'ket-qua', loadChildren: 'app/+result/result.module#ResultModule' },
     { path: 'thiet-lap', loadChildren: 'app/+preferences/preferences.module#PreferencesModule' }
 ];
 
