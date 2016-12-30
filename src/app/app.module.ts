@@ -8,6 +8,8 @@ import { CoreModule } from './core/core.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 
 import { ResultService } from './shared/result.service';
+import { LotterySettingsService } from './shared/lottery-settings.service';
+
 
 @NgModule({
   
@@ -23,7 +25,8 @@ import { ResultService } from './shared/result.service';
     routableComponents    
   ],
   providers: [
-    ResultService
+    ResultService,
+    LotterySettingsService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,5 @@
-<div class="row mt-2 text-xs-center">
-  <app-lottery-number></app-lottery-number>
-  <app-lottery-number></app-lottery-number>  
+<div class="row mt-2 text-xs-center" *ngIf="currentSlot">
+  <app-lottery-number-digit [digit]="currentSlot.firstDigit"></app-lottery-number-digit>
+  <app-lottery-number-digit [digit]="currentSlot.secondDigit"></app-lottery-number-digit>  
 </div>
+

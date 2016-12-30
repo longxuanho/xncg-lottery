@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SettingsService } from './core/shared/settings.service';
+import { LotterySettingsService } from './shared/lottery-settings.service';
+import { ResultService } from './shared/result.service';
+
 import { Subscription } from 'rxjs/Subscription';
 
 
@@ -9,20 +11,24 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  
+
   subscriptions: {
-    settings?: Subscription
-  } = { }
+    settings?: Subscription,
+    results?: Subscription
+  } = {}
 
   constructor(
-    private settingsService: SettingsService
+    private lotterySettingsService: LotterySettingsService,
+    private resultService: ResultService
   ) { }
 
   ngOnInit() {
-    this.subscriptions.settings = this.settingsService.syncSettings();
+    this.subscriptions.settings = this.lotterySettingsService.syncSettings();
+    this.subscriptions.results = this.resultService.syncCurrentResults();
   }
 
   ngOnDestroy() {
-      this.subscriptions.settings.unsubscribe();
+    this.subscriptions.settings.unsubscribe();
+    this.subscriptions.results.unsubscribe();
   }
 }

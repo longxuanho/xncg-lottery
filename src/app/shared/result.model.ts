@@ -1,4 +1,5 @@
-export const currentResultsRef = '/results';  // Đường dẫn tới data trên firebase
+export const currentResultsRef = '/lottery/results';    // Đường dẫn tới data trên firebase
+
 
 export enum Prizes {
     GiaiNhat = 1,
@@ -7,6 +8,8 @@ export enum Prizes {
 }
 
 export class Result {
+    $key?: string;
+    $exists?: () => boolean;
     prize: number;
     number: number;
 }

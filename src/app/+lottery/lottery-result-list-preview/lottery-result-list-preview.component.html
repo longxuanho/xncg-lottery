@@ -1,6 +1,18 @@
 <br>
+
 <h4 class="text-xs-center">Danh sách các số trúng thưởng</h4>
-<p class="text-xs-center">
+<br>
+<p class="text-xs-center" *ngIf="!hasResult">
   Các số bốc thăm may mắn trúng thưởng được liệt kê tại đây. Hãy nhấn (Bắt đầu) để khởi động vòng quay mới!
 </p>
+<p class="text-xs-center text-danger d-winning-number" *ngIf="results.hasOwnProperty('1')">
+  <span *ngFor="let result of results['1']; let i = index">{{result.number | number:'2.0-0'}} <span *ngIf="i < results['1'].length - 1">- </span></span>
+</p>
+<p class="text-xs-center text-warning d-winning-number" *ngIf="results.hasOwnProperty('2')">
+  <span *ngFor="let result of results['2']; let i = index">{{result.number | number:'2.0-0'}} <span *ngIf="i < results['2'].length - 1">- </span></span>
+</p>
+<p class="text-xs-center text-success d-winning-number" *ngIf="results.hasOwnProperty('3')">
+  <span *ngFor="let result of results['3']; let i = index">{{result.number | number:'2.0-0'}} <span *ngIf="i < results['3'].length - 1">- </span></span>
+</p>
+
 <br>
