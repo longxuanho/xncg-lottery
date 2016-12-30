@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AuthService } from './shared/auth.service';
+import { SettingsService } from './shared/settings.service';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { AuthService } from './shared/auth.service';
     NavbarComponent,
   ],
   providers: [
-    AuthService
+    AuthService,
+    SettingsService
   ],
   exports: [
     ToastrModule,

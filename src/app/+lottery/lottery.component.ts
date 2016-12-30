@@ -12,4 +12,6 @@ export class LotteryComponent implements OnInit {
   ngOnInit() {
   }
 
+  
+
 }

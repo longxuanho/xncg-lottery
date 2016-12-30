@@ -2,12 +2,12 @@
   <div class="col-md-6 offset-md-3 text-xs-center">
     <div class="btn-group select-full-block w-100 dropup">
       <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Giải Nhất
+        {{currentPrizeText}}
       </button>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
+        <a class="dropdown-item" href="#" (click)="setCurrentPrize($event, 1)">Giải Nhất</a>
+        <a class="dropdown-item" href="#" (click)="setCurrentPrize($event, 2)">Giải Nhì</a>
+        <a class="dropdown-item" href="#" (click)="setCurrentPrize($event, 3)">Giải Ba</a>
       </div>
     </div>
   </div>
@@ -15,6 +15,6 @@
 
 <div class="row mt-2 mb-2">
   <div class="col-md-6 offset-md-3 text-xs-center">
-    <button type="button" class="btn btn-outline-primary btn-lg btn-block">Bắt đầu!</button>
+    <button type="button" class="btn btn-outline-primary btn-lg btn-block" (click)="onSubmit()">Bắt đầu!</button>
   </div>
 </div>

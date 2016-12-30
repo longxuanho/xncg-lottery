@@ -7,6 +7,8 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 
+import { ResultService } from './shared/result.service';
+
 @NgModule({
   
   imports: [
@@ -20,7 +22,9 @@ import { DashboardModule } from './dashboard/dashboard.module';
     AppComponent,
     routableComponents    
   ],
-  providers: [],
+  providers: [
+    ResultService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
