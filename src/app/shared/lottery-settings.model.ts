@@ -1,22 +1,23 @@
 export const lotterySettingsRef = '/settings/lottery';     // Đường dẫn tới data trên firebase
 
 export class LotterySettings {
-    resultMaxCount: number;         // Giới hạn số kết quả trả về khi truy vấn tại firebase
+    resultMaxCount: number;             // Giới hạn số kết quả trả về khi truy vấn tại firebase
 
     
-    displayCurrentSlot: number;     // Số hiển thị lớn trên slot quay số tại (Bảng tin) và (Quay số)
-    displayCurrentPrize: number;    // Giải thưởng hiện tại phần (Quay số)
-    displayMainTitle: string;       // Title chào mừng tại (Bảng tin)  
-    displaySubtitle: string;        // Subtitle chào mừng tại (Bảng tin)
-    displayHostName: string;        // Tên đơn vị tổ chức hiển thị trên (Bảng tin)
-    displayHostLogoUrl?: string;     // Logo url của đơn vị tổ chức hiển thị trên (Bảng tin)
+    displayCurrentSlot: number;         // Số hiển thị lớn trên slot quay số tại (Bảng tin) và (Quay số)
+    displayCurrentPrize: number;        // Giải thưởng hiện tại phần (Quay số)
+    displayMainTitle: string;           // Title chào mừng tại (Bảng tin)  
+    displaySubtitle: string;            // Subtitle chào mừng tại (Bảng tin)
+    displayHostName: string;            // Tên đơn vị tổ chức hiển thị trên (Bảng tin)
+    displayHostLogoUrl?: string;        // Logo url của đơn vị tổ chức hiển thị trên (Bảng tin)
     displayThongTinGiaiThuong: boolean;
     displayThongTinGiaiThuong_GiaiNhat: string;
     displayThongTinGiaiThuong_GiaiNhi: string;
     displayThongTinGiaiThuong_GiaiBa: string;
+    displayResultsInDashBoard?: boolean  // Dashboard sẽ hiển thị bảng slots (false) quay số hay bảng tổng kết kết quả (true)?
 
-    numberRandomMax: number;        // Giới hạn trên của thuật toán randomize
-    numberRandomMin: number;        // Giới hạn dưới của thuật toán randomize
+    numberRandomMax: number;            // Giới hạn trên của thuật toán randomize
+    numberRandomMin: number;            // Giới hạn dưới của thuật toán randomize
 }
 
 export const defaultLotterySettings: LotterySettings = {
@@ -31,6 +32,7 @@ export const defaultLotterySettings: LotterySettings = {
     displayThongTinGiaiThuong_GiaiNhat: 'Phần quà trị giá 5.000.000 VNĐ từ Ban tổ chức.',
     displayThongTinGiaiThuong_GiaiNhi: 'Phần quà trị giá 3.000.000 VNĐ từ Ban tổ chức.',
     displayThongTinGiaiThuong_GiaiBa: 'Phần quà trị giá 1.000.000 VNĐ từ Ban tổ chức.',
+    displayResultsInDashBoard: false,
 
     numberRandomMax: 99,
     numberRandomMin: 0

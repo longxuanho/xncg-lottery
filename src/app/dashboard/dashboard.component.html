@@ -1,11 +1,14 @@
-<div class="anti-background">
+<div class="anti-background" *ngIf="lotterySettings">
     <app-dashboard-heading></app-dashboard-heading>
     <hr/>
 
-    <app-lottery-result-list-preview></app-lottery-result-list-preview>
-    <hr/>
+    <div *ngIf="!lotterySettings.displayResultsInDashBoard">
+        <app-lottery-result-list-preview ></app-lottery-result-list-preview>
+        <hr/>
+    </div>
+    
 
-    <div class="row mt-2 mb-2" *ngIf="currentPrizeText">
+    <div class="row mt-2 mb-2" *ngIf="currentPrizeText && !lotterySettings.displayResultsInDashBoard">
         <h3 class="text-xs-center" 
             [ngClass]="{
                 'text-success': lotterySettings.displayCurrentPrize===3,
@@ -14,7 +17,9 @@
             }">{{currentPrizeText}}</h3>
     </div>
 
-    <app-lottery-number-slots [listener]="true"></app-lottery-number-slots>
+    <app-dashboard-results *ngIf="lotterySettings.displayResultsInDashBoard"></app-dashboard-results>
+
+    <app-lottery-number-slots [listener]="true" *ngIf="!lotterySettings.displayResultsInDashBoard"></app-lottery-number-slots>
     <hr/>
 </div>
 

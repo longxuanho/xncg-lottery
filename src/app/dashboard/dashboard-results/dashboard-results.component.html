@@ -34,16 +34,3 @@
     </div>
   </div>
 </div>
-
-<div *ngIf="lotterySettings">
-  <div class="row mt-2 mb-2" *ngIf="!lotterySettings.displayResultsInDashBoard">
-    <div class="col-md-6 offset-md-3 text-xs-center">
-      <button type="button" class="btn btn-outline-primary btn-lg btn-block" (click)="syncDashboard()">Đồng bộ Bảng tin</button>
-    </div>
-  </div>
-  <div class="row mt-2 mb-2" *ngIf="lotterySettings.displayResultsInDashBoard">
-    <div class="col-md-6 offset-md-3 text-xs-center">
-      <button type="button" class="btn btn-outline-primary btn-lg btn-block" (click)="aSyncDashboard()">Ngừng đồng bộ Bảng tin</button>
-    </div>
-  </div>
-</div>

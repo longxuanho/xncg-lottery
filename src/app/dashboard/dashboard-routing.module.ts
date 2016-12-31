@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardResultListPreviewComponent } from './dashboard-result-list-preview/dashboard-result-list-preview.component';
+import { DashboardResultsComponent } from './dashboard-results/dashboard-results.component';
+
 
 const routes: Routes = [
     { 
@@ -23,5 +25,5 @@ const routes: Routes = [
 export class DashboardRoutingModule {}
 
 export const routedComponents = [
-    DashboardComponent, DashboardResultListPreviewComponent
+    DashboardComponent, DashboardResultListPreviewComponent, DashboardResultsComponent
 ]

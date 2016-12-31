@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'toastr-ng2';
+import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '../shared/auth.service';
 import { emailValidatePattern } from '../shared/auth.model';
@@ -11,9 +12,10 @@ import { emailValidatePattern } from '../shared/auth.model';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm: FormGroup;
+  subscriptions: { auth?: Subscription } = {}
 
   constructor(
     private authService: AuthService,
@@ -31,6 +33,15 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
       rememberMe: [true]
     });
+    this.subscriptions.auth = this.authService.syncAuth().subscribe(auth => {
+      console.log(auth)
+      if (auth && auth.uid) 
+        this.router.navigate(['/bang-tin']);
+    })
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.auth.unsubscribe();
   }
 
   onLogIn(): void {
@@ -38,7 +49,7 @@ export class LoginComponent implements OnInit {
       (success) => {
         this.loginForm.reset();
         this.toastrService.success('Welcome back!', 'Đăng nhập thành công');
-        this.router.navigate(['/quay-so']);
+        // this.router.navigate(['/quay-so']);
       }
     ).catch((error: string) => this.toastrService.error(error, 'Opps!'));
   }

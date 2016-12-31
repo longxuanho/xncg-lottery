@@ -1,19 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { LotterySettingsService } from '../shared/lottery-settings.service';
-import { LotterySettings } from '../shared/lottery-settings.model';
+import { LotterySettingsService } from '../../shared/lottery-settings.service';
+import { LotterySettings } from '../../shared/lottery-settings.model';
 
 import { ToastrService } from 'toastr-ng2';
-import { Result, Prizes } from '../shared/result.model';
-import { ResultService } from '../shared/result.service';
+import { Result, Prizes } from '../../shared/result.model';
+import { ResultService } from '../../shared/result.service';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-result',
-  templateUrl: './result.component.html',
-  styleUrls: ['./result.component.scss']
+  selector: 'app-dashboard-results',
+  templateUrl: './dashboard-results.component.html',
+  styleUrls: ['./dashboard-results.component.scss']
 })
-export class ResultComponent implements OnInit, OnDestroy {
+export class DashboardResultsComponent implements OnInit, OnDestroy {
 
   results: { [key: string]: Result[] } = {};
   hasResult: boolean = false;
@@ -27,19 +27,7 @@ export class ResultComponent implements OnInit, OnDestroy {
     private lotterySettingsService: LotterySettingsService,
     private toastrService: ToastrService,
     private resultService: ResultService,
-  ) { 
-
-  }
-
-  syncDashboard() {
-    this.lotterySettingsService.patchSettings({ displayResultsInDashBoard: true })
-      .catch(error => this.handleError(error));
-  }
-
-  aSyncDashboard() {
-    this.lotterySettingsService.patchSettings({ displayResultsInDashBoard: false })
-      .catch(error => this.handleError(error));
-  }
+  ) { }
 
   handleError(error: Error) {
     console.log(`${error.message}: ${error.stack}`);
