@@ -1,8 +1,16 @@
-<div class="row mt-2 text-xs-center" *ngIf="lotterySettings" [ngClass]="{'text-success': lotterySettings.displayCurrentPrize===3, 'text-warning': lotterySettings.displayCurrentPrize===2, 'text-danger': lotterySettings.displayCurrentPrize===1}">
-  <div id="firstDigit" class="animate-digit">
-    <span >{{firstDigit}}</span>
+<div class="row mt-2 text-xs-center neon" *ngIf="lotterySettings" [ngClass]="{'text-success': lotterySettings.displayCurrentPrize===3, 'text-warning': lotterySettings.displayCurrentPrize===2, 'text-danger': lotterySettings.displayCurrentPrize===1}">
+  <div id="firstDigit" class="animate-digit neon-glow">
+    <span [ngClass]="{
+      'neon-glow-success': hasNeonEffect1 && (lotterySettings.displayCurrentPrize===3), 
+      'neon-glow-warning': hasNeonEffect1 && (lotterySettings.displayCurrentPrize===2), 
+      'neon-glow-danger': hasNeonEffect1 && (lotterySettings.displayCurrentPrize===1)
+      }">{{firstDigit}}</span>
   </div>
   <div id="secondDigit" class="animate-digit">
-    <span >{{secondDigit}}</span>
+    <span [ngClass]="{
+      'neon-glow-success': hasNeonEffect2 && (lotterySettings.displayCurrentPrize===3), 
+      'neon-glow-warning': hasNeonEffect2 && (lotterySettings.displayCurrentPrize===2), 
+      'neon-glow-danger': hasNeonEffect2 && (lotterySettings.displayCurrentPrize===1)
+      }">{{secondDigit}}</span>
   </div>
 </div>

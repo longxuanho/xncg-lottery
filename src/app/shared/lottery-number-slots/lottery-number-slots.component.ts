@@ -27,9 +27,11 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
 
   firstDigit: number = 0;
   secondDigit: number = 0;
-  targetFirstDigit: number;
-  targetSecondDigit: number;
   animateSpeed: number = 500;
+
+  hasNeonEffect1: boolean = false;
+  hasNeonEffect2: boolean = false;
+  neonEffectDuration: number = 6000;
 
   constructor(
     private lotterySettingsService: LotterySettingsService,
@@ -43,9 +45,15 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
       .subscribe((result: Result) => {
         this.currentSlot = this.numberService.resolveNumberDigits(result.number);
         this.animateFirstDigit(this.currentSlot.firstDigit)
-          .then(success => this.animateSecondDigit(this.currentSlot.secondDigit))
+          .then(success => {
+            this.glowAfterAnimateFirstDigit();
+            return this.animateSecondDigit(this.currentSlot.secondDigit);
+          })
           // Sau khi animate xong -> đẩy dữ liệu lên server để đồng bộ
-          .then(success => this.resultService.addNewResult(result))
+          .then(success => {
+            this.glowAfterAnimateSecondDigit();
+            return this.resultService.addNewResult(result) 
+          })
           .then(success => this.lotterySettingsService.setCurrentSlot(result.number))
           .catch((error: Error) => this.handleError(error));
       })
@@ -68,6 +76,11 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
     });
   }
 
+  glowAfterAnimateFirstDigit() {
+    // Sau khi animate xong digit 1 -> bật hiệu ứng neon cho digit 1
+    this.hasNeonEffect1 = true; 
+  }
+
   animateSecondDigit(animateObject: AnimateDigit) {
     return new Promise((resolve, reject) => {
       let elapsedTime = 0;
@@ -83,6 +96,15 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
         }
       }, this.animateSpeed);
     });
+  }
+
+  glowAfterAnimateSecondDigit() {
+    // Sau khi animate xong digit 2 -> bật hiệu ứng neon cho digit 2, delay một khoảng thời gian rồi tắt hiệu ứng cả digit 1 và 2
+    this.hasNeonEffect2 = true;
+      setTimeout(() => {
+        this.hasNeonEffect2 = false;
+        this.hasNeonEffect1 = false;
+      }, this.neonEffectDuration);   
   }
 
   handleError(error: Error) {

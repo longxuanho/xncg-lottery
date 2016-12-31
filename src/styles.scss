@@ -11,4 +11,57 @@
 .has-background-image {
     background: url(assets/images/sakura-01.jpg) no-repeat center center fixed;
     background-size: cover;
-}   
+}
+
+.neon {
+  background-color: #222222;
+  background: repeating-linear-gradient(45deg, #2b2b2b 0%, #2b2b2b 10%, #222222 0%, #222222 50%) 0 / 15px 15px;
+  &-glow {
+    transition: all 0.5s;
+  
+    &-danger {
+        color: #fff;
+        animation: neon1 1.5s ease-in-out infinite alternate;
+    }
+
+    &-warning {
+        color: #fff;
+        animation: neon2 1.5s ease-in-out infinite alternate;
+    }
+
+    &-success {
+        color: #fff;
+        animation: neon3 1.5s ease-in-out infinite alternate;
+    }   
+  }
+}
+
+@keyframes neon1 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #d9534f, 0 0 70px #d9534f, 0 0 80px #d9534f, 0 0 100px #d9534f, 0 0 150px #d9534f;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #d9534f, 0 0 35px #d9534f, 0 0 40px #d9534f, 0 0 50px #d9534f, 0 0 75px #d9534f;
+  }
+}
+
+@keyframes neon2 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #f0ad4e, 0 0 70px #f0ad4e, 0 0 80px #f0ad4e, 0 0 100px #f0ad4e, 0 0 150px #f0ad4e;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #f0ad4e, 0 0 35px #f0ad4e, 0 0 40px #f0ad4e, 0 0 50px #f0ad4e, 0 0 75px #f0ad4e;
+  }
+}
+
+@keyframes neon3 {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #5cb85c, 0 0 70px #5cb85c, 0 0 80px #5cb85c, 0 0 100px #5cb85c, 0 0 150px #5cb85c;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #5cb85c, 0 0 35px #5cb85c, 0 0 40px #5cb85c, 0 0 50px #5cb85c, 0 0 75px #5cb85c;
+  }
+}
+
+
+
