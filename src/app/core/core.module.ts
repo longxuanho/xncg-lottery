@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AuthService } from './shared/auth.service';
+import { DataFlowService } from './shared/data-flow.service';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { AuthService } from './shared/auth.service';
   ],
   providers: [
     AuthService,
+    DataFlowService
   ],
   exports: [
     ToastrModule,

@@ -34,8 +34,7 @@ export class LotteryResultListPreviewComponent implements OnInit, OnDestroy {
       this.results = {};
       this.hasResult = false;
     }   
-  }
-  
+  }  
 
   handleError(error: Error) {
     console.log(`${error.message}: ${error.stack}`);
@@ -45,18 +44,7 @@ export class LotteryResultListPreviewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.results = this.resultService.getResults()      
       .subscribe(
-        (value: Result[]) => {
-          if (_.isEmpty(this.results)) {
-            this.resolveResult(value);
-          } else {
-            // Chờ 15s để hoàn thành animate sau đó mới hiển thị kết quả
-            setTimeout(() => {
-              this.resolveResult(value);
-            }, 15000); 
-          }
-
-                            
-        },
+        (value: Result[]) => this.resolveResult(value),
         (errors: Error) => this.handleError(errors)
       )
   }

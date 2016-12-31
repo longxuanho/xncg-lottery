@@ -1,4 +1,4 @@
-<div class="row mt-2 text-xs-center" *ngIf="currentSlot && lotterySettings" [ngClass]="{'text-success': lotterySettings.displayCurrentPrize===3, 'text-warning': lotterySettings.displayCurrentPrize===2, 'text-danger': lotterySettings.displayCurrentPrize===1}">
+<div class="row mt-2 text-xs-center" *ngIf="lotterySettings" [ngClass]="{'text-success': lotterySettings.displayCurrentPrize===3, 'text-warning': lotterySettings.displayCurrentPrize===2, 'text-danger': lotterySettings.displayCurrentPrize===1}">
   <div id="firstDigit" class="animate-digit">
     <span >{{firstDigit}}</span>
   </div>

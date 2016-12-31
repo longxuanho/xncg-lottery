@@ -7,6 +7,7 @@ import { ToastrService } from 'toastr-ng2';
 import { NumberService } from '../../shared/number.service';
 import { Result, Prizes } from '../../shared/result.model';
 import { ResultService } from '../../shared/result.service';
+import { DataFlowService } from '../../core/shared/data-flow.service';
 
 import * as _ from 'lodash';
 
@@ -33,7 +34,8 @@ export class LotteryControlsComponent implements OnInit, OnDestroy {
     private lotterySettingsService: LotterySettingsService,
     private toastrService: ToastrService,
     private resultService: ResultService,
-    private numberService: NumberService
+    private numberService: NumberService,
+    private dataFlowService: DataFlowService
   ) { }
 
   setCurrentPrize(event: Event, value: number) {
@@ -48,9 +50,15 @@ export class LotteryControlsComponent implements OnInit, OnDestroy {
           prize: this.lotterySettings.displayCurrentPrize,
           number: number
         }
-        this.addNewResult(this.newResult);      
+        // Forward result tới lottery-number-slots để animate trước khi lưu
+        this.preAddNewResult(this.newResult);
+        // this.addNewResult(this.newResult);      
       })
       .catch((error: Error) => this.toastrService.error(error.message));
+  }
+
+  preAddNewResult(result: Result) {
+    this.dataFlowService.generatedNumber(result);
   }
 
   addNewResult(newResult: Result) {

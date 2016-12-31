@@ -6,6 +6,9 @@ import { LotterySettings } from '../../shared/lottery-settings.model';
 import { NumberService } from '../../shared/number.service';
 import { AnimateDigit } from '../../shared/number.model'
 import { ToastrService } from 'toastr-ng2';
+import { DataFlowService } from '../../core/shared/data-flow.service';
+import { ResultService } from '../../shared/result.service';
+import { Result } from '../result.model';
 
 
 @Component({
@@ -16,7 +19,8 @@ import { ToastrService } from 'toastr-ng2';
 export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
 
   subscriptions: {
-    lotterySettings?: Subscription
+    lotterySettings?: Subscription,
+    dataFlow?: Subscription
   } = {}
   lotterySettings: LotterySettings;
   currentSlot: { firstDigit: AnimateDigit, secondDigit: AnimateDigit };
@@ -31,7 +35,21 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
     private lotterySettingsService: LotterySettingsService,
     private numberService: NumberService,
     private toastrService: ToastrService,
-  ) { }
+    private dataFlowService: DataFlowService,
+    private resultService: ResultService,
+
+  ) {
+    this.subscriptions.dataFlow = this.dataFlowService.numberGenerated$
+      .subscribe((result: Result) => {
+        this.currentSlot = this.numberService.resolveNumberDigits(result.number);
+        this.animateFirstDigit(this.currentSlot.firstDigit)
+          .then(success => this.animateSecondDigit(this.currentSlot.secondDigit))
+          // Sau khi animate xong -> đẩy dữ liệu lên server để đồng bộ
+          .then(success => this.resultService.addNewResult(result))
+          .then(success => this.lotterySettingsService.setCurrentSlot(result.number))
+          .catch((error: Error) => this.handleError(error));
+      })
+  }
 
   animateFirstDigit(animateObject: AnimateDigit) {
     return new Promise((resolve, reject) => {
@@ -65,7 +83,6 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
         }
       }, this.animateSpeed);
     });
-
   }
 
   handleError(error: Error) {
@@ -76,24 +93,14 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.lotterySettings = this.lotterySettingsService.getSettings()
       .subscribe(
-      (value: LotterySettings) => {
-        this.currentSlot = this.numberService.resolveNumberDigits(value.displayCurrentSlot);
-        
-        if (this.lotterySettings && (this.lotterySettings.displayCurrentSlot !== value.displayCurrentSlot)) {
-          
-          this.animateFirstDigit(this.currentSlot.firstDigit)
-            .then(success => this.animateSecondDigit(this.currentSlot.secondDigit));
-        }
-        this.lotterySettings = value;
-        
-
-      },
-      error => this.handleError(error)
+        (value: LotterySettings) => this.lotterySettings = value,
+        error => this.handleError(error)
       );
   }
 
   ngOnDestroy() {
     this.subscriptions.lotterySettings.unsubscribe();
+    this.subscriptions.dataFlow.unsubscribe();
   }
 
 }
