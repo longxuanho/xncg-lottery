@@ -23,6 +23,10 @@ export class AuthService {
     return this.auth;
   }
 
+  syncAuth() {
+    return this.af.auth;
+  }
+
   isAuth() {
     return !!this.auth.data;
   }

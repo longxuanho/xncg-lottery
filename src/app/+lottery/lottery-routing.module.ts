@@ -10,7 +10,7 @@ import { LotteryControlsComponent } from './lottery-controls/lottery-controls.co
 const routes: Routes = [
     {
         path: '',
-        component: LotteryComponent,
+        component: LotteryComponent
     },
 ];
 

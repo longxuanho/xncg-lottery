@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { LotteryRoutingModule, routedComponents } from './lottery-routing.module';
-import { NumberService } from './shared/number.service';
+
 
 
 @NgModule({
@@ -9,9 +9,7 @@ import { NumberService } from './shared/number.service';
     SharedModule,
     LotteryRoutingModule
   ],
-  providers: [
-    NumberService
-  ],
+  providers: [],
   declarations: [routedComponents]
 })
 export class LotteryModule { }

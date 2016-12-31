@@ -1,3 +1,42 @@
-<p>
-  result works!
-</p>
+
+<div class="row mt-2" *ngIf="results.hasOwnProperty('1') && lotterySettings">
+  <div class="col-md-6 offset-md-3 text-xs-center">
+    <div class="card">
+      <h3 class="card-header">Giải Nhất</h3>
+      <div class="card-block">
+        <h4 class="card-title text-danger d-winning-number"><span *ngFor="let result of results['1']; let i = index">{{result.number | number:'2.0-0'}} <span *ngIf="i < results['1'].length - 1">- </span></span></h4>
+        <p class="card-text" *ngIf="lotterySettings.displayThongTinGiaiThuong">{{lotterySettings.displayThongTinGiaiThuong_GiaiNhat}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-2" *ngIf="results.hasOwnProperty('2') && lotterySettings">
+  <div class="col-md-6 offset-md-3 text-xs-center">
+    <div class="card">
+      <h3 class="card-header">Giải Nhì</h3>
+      <div class="card-block">
+        <h4 class="card-title text-warning d-winning-number"><span *ngFor="let result of results['2']; let i = index">{{result.number | number:'2.0-0'}} <span *ngIf="i < results['2'].length - 1">- </span></span></h4>
+        <p class="card-text" *ngIf="lotterySettings.displayThongTinGiaiThuong">{{lotterySettings.displayThongTinGiaiThuong_GiaiNhi}}.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-2" *ngIf="results.hasOwnProperty('3') && lotterySettings">
+  <div class="col-md-6 offset-md-3 text-xs-center">
+    <div class="card">
+      <h3 class="card-header">Giải Ba</h3>
+      <div class="card-block">
+        <h4 class="card-title text-success d-winning-number"><span *ngFor="let result of results['3']; let i = index">{{result.number | number:'2.0-0'}} <span *ngIf="i < results['3'].length - 1">- </span></span></h4>
+        <p class="card-text" *ngIf="lotterySettings.displayThongTinGiaiThuong">{{lotterySettings.displayThongTinGiaiThuong_GiaiBa}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-2 mb-2">
+  <div class="col-md-6 offset-md-3 text-xs-center">
+    <button type="button" class="btn btn-outline-primary btn-lg btn-block" (click)="syncDashboard()">Đồng bộ Bảng tin</button>
+  </div>
+</div>

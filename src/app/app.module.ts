@@ -9,6 +9,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 
 import { ResultService } from './shared/result.service';
 import { LotterySettingsService } from './shared/lottery-settings.service';
+import { NumberService } from './shared/number.service';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { LotterySettingsService } from './shared/lottery-settings.service';
   ],
   providers: [
     ResultService,
-    LotterySettingsService
+    LotterySettingsService,
+    NumberService
   ],
   bootstrap: [AppComponent]
 })

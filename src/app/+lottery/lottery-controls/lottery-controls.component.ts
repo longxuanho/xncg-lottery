@@ -4,7 +4,7 @@ import { LotterySettingsService } from '../../shared/lottery-settings.service';
 import { LotterySettings } from '../../shared/lottery-settings.model';
 
 import { ToastrService } from 'toastr-ng2';
-import { NumberService } from '../shared/number.service';
+import { NumberService } from '../../shared/number.service';
 import { Result, Prizes } from '../../shared/result.model';
 import { ResultService } from '../../shared/result.service';
 

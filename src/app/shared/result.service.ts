@@ -15,16 +15,20 @@ export class ResultService {
   ) { 
   }
 
-  getResults(options: { resultMaxCount: number } = { resultMaxCount: 20 }) {
+  getResults(options: { resultMaxCount: number } = { resultMaxCount: 30 }) {
     return this.af.database.list(currentResultsRef, { 
         query: {
-          limitToFirst: options.resultMaxCount
+          limitToLast: options.resultMaxCount
         }
       });
   }
 
   addNewResult(newResult: Result) {
     return this.af.database.list(currentResultsRef).push(newResult);
+  }
+
+  resetResults() {
+    return this.af.database.list(currentResultsRef).remove();
   }
 
   resolvePrizeText(value: number): string {

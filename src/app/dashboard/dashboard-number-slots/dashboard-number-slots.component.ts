@@ -7,13 +7,12 @@ import { NumberService } from '../../shared/number.service';
 import { NumberSlot } from '../../shared/number.model'
 import { ToastrService } from 'toastr-ng2';
 
-
 @Component({
-  selector: 'app-lottery-number-slots',
-  templateUrl: './lottery-number-slots.component.html',
-  styleUrls: ['./lottery-number-slots.component.scss']
+  selector: 'app-dashboard-number-slots',
+  templateUrl: './dashboard-number-slots.component.html',
+  styleUrls: ['./dashboard-number-slots.component.scss']
 })
-export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
+export class DashboardNumberSlotsComponent implements OnInit, OnDestroy {
 
   subscriptions: {
     lotterySettings?: Subscription

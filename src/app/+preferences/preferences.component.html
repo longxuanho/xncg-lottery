@@ -1,3 +1,42 @@
-<p>
-  preferences works!
-</p>
+<h3 class="mt-2">Thay đổi thiết lập của tôi</h3>
+
+<div id="accordion" role="tablist" aria-multiselectable="true" class="mt-2">
+  <div class="card">
+    <div class="card-header" role="tab" id="headingOne">
+      <h5 class="mb-0">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Thông tin hiển thị
+        </a>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <app-preferences-thong-tin-hien-thi></app-preferences-thong-tin-hien-thi>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" role="tab" id="headingTwo">
+      <h5 class="mb-0">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Thuật toán
+        </a>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <app-preferences-thuat-toan></app-preferences-thuat-toan>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" role="tab" id="headingThree">
+      <h5 class="mb-0">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Dữ liệu chương trình
+        </a>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+        <app-preferences-du-lieu-chuong-trinh></app-preferences-du-lieu-chuong-trinh>
+        
+    </div>
+  </div>
+</div>

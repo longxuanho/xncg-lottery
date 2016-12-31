@@ -1,0 +1,19 @@
+<div class="container mt-2 mb-2">
+  <form [formGroup]="thuatToanForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="form-group">
+          <label for="inputGioiHanTren">Giới hạn dưới</label>
+          <input type="number" class="form-control" id="inputGioiHanTren" placeholder="Nhập giá trị min" formControlName="numberRandomMin">
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="form-group">
+          <label for="inputGioiHanDuoi">Giới hạn trên</label>
+          <input type="number" class="form-control" id="inputGioiHanDuoi" placeholder="Nhập giá trị max" formControlName="numberRandomMax">
+        </div>
+      </div>      
+    </div>
+    <button type="submit" class="btn btn-outline-primary mt-2" [disabled]="thuatToanForm.invalid || submitting">Cập nhật</button>
+  </form>
+</div>

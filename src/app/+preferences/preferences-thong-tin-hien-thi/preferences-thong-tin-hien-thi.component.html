@@ -1,0 +1,35 @@
+<div class="container mt-2 mb-2">
+  <form [formGroup]="thongTinHienThiForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="inputDonViToChuc">Đơn vị tổ chức</label>
+        <input type="text" class="form-control" id="inputDonViToChuc" placeholder="Đơn vị tổ chức" formControlName="displayHostName">
+      </div>
+      <div class="form-group">
+        <label for="inputTieuDeChinh">Tiêu đề chính</label>
+        <input type="text" class="form-control" id="inputTieuDeChinh" placeholder="Nhập tiêu đề" formControlName="displayMainTitle">
+      </div>
+      <div class="form-group">
+        <label for="inputPhuDe">Phụ đề</label>
+        <input type="text" class="form-control" id="inputPhuDe" placeholder="Nhập phụ đề" formControlName="displaySubtitle">
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" formControlName="displayThongTinGiaiThuong">
+          Hiển thị thông tin về giải thưởng
+        </label>
+      </div>
+      <div class="form-group" *ngIf="thongTinHienThiForm.controls.displayThongTinGiaiThuong.value">
+        <label for="inputGiaiNhat">Giải Nhất</label>
+        <input type="text" class="form-control" id="inputGiaiNhat" placeholder="Thông tin về giải nhất" formControlName="displayThongTinGiaiThuong_GiaiNhat">
+      </div>
+      <div class="form-group" *ngIf="thongTinHienThiForm.controls.displayThongTinGiaiThuong.value">
+        <label for="inputGiaiNhi">Giải Nhì</label>
+        <input type="text" class="form-control" id="inputGiaiNhi" placeholder="Thông tin về giải nhì" formControlName="displayThongTinGiaiThuong_GiaiNhi">
+      </div>
+      <div class="form-group" *ngIf="thongTinHienThiForm.controls.displayThongTinGiaiThuong.value">
+        <label for="inputGiaiBa">Giải Ba</label>
+        <input type="text" class="form-control" id="inputGiaiBa" placeholder="Thông tin về giải ba" formControlName="displayThongTinGiaiThuong_GiaiBa">
+      </div>
+    <button type="submit" class="btn btn-outline-primary mt-2" [disabled]="thongTinHienThiForm.invalid || submitting">Cập nhật</button>
+  </form>
+</div>

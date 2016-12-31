@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 import { ToastrService } from 'toastr-ng2';
-
-import { LotterySettings, lotterySettingsRef, lotteryCurrentPrizeRef, lotteryCurrentSlotRef } from './lottery-settings.model';
+import { AuthService } from '../core/shared/auth.service'
+import { LotterySettings, lotterySettingsRef } from './lottery-settings.model';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
 
 @Injectable()
 export class LotterySettingsService {
@@ -14,30 +15,48 @@ export class LotterySettingsService {
 
   constructor(
     private af: AngularFire,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private authService: AuthService
   ) { }
 
+  setSettings(settings: LotterySettings) {
+    const uid = this.authService.getAuth().data.uid;
+    return this.af.database.object(lotterySettingsRef + `/${uid}`).set(settings);
+  }
+
+  patchSettings(options) {
+    const uid = this.authService.getAuth().data.uid;
+    return this.af.database.object(lotterySettingsRef + `/${uid}`).update(options);
+  }
+  
   getSettings() {
-    return this.af.database.object(lotterySettingsRef);
+    return this.authService.syncAuth()
+      .mergeMap(auth => this.af.database.object(lotterySettingsRef  + `/${auth.uid}`))
+    // const uid = this.authService.getAuth().data.uid;
+    // return this.af.database.object(lotterySettingsRef  + `/${uid}`);
   }
 
   setCurrentPrize(value: number) {
-    this.af.database.object(lotterySettingsRef).update({ displayCurrentPrize: value })
+    const uid = this.authService.getAuth().data.uid;
+    this.af.database.object(lotterySettingsRef + `/${uid}`).update({ displayCurrentPrize: value })
       .catch(error => this.handleError(error));
   }
 
   setCurrentSlot(value: number) {
-    this.af.database.object(lotterySettingsRef).update({ displayCurrentSlot: value })
+    const uid = this.authService.getAuth().data.uid;
+    this.af.database.object(lotterySettingsRef + `/${uid}`).update({ displayCurrentSlot: value })
       .catch(error => this.handleError(error));
   }
 
   getCurrentSlot() {
-    return this.af.database.object(lotteryCurrentSlotRef)
+    const uid = this.authService.getAuth().data.uid;
+    return this.af.database.object(lotterySettingsRef + `/${uid}/displayCurrentSlot`)
       .map(data => data.$value);
   }
 
   getCurrentPrize() {
-    return this.af.database.object(lotteryCurrentPrizeRef)
+    const uid = this.authService.getAuth().data.uid;
+    return this.af.database.object(lotterySettingsRef + `/${uid}/displayCurrentPrize`)
       .map(data => data.$value);
   }
 
@@ -45,7 +64,5 @@ export class LotterySettingsService {
     console.log(`${error.message}: ${error.stack}`);
     this.toastrService.error(error.message, 'Đồng bộ thiết lập thất bại');
   }
-
-
 
 }
