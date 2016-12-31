@@ -27,7 +27,8 @@ export class LotteryControlsComponent implements OnInit, OnDestroy {
 
   subscriptions: {
     lotterySettings?: Subscription,
-    results?: Subscription
+    results?: Subscription,
+    dataFlow?: Subscription
   } = {}
 
   constructor(
@@ -36,7 +37,13 @@ export class LotteryControlsComponent implements OnInit, OnDestroy {
     private resultService: ResultService,
     private numberService: NumberService,
     private dataFlowService: DataFlowService
-  ) { }
+  ) { 
+    this.subscriptions.dataFlow = this.dataFlowService.numberAnimated$
+      .subscribe((result: Result) => {
+        // Sau khi dữ liệu đi từ control này -> lottery-slots để animate và cập nhật -> trở lại control này, ta mở khóa nút (Bắt đầu)
+        this.submitting = false;
+      });
+  }
 
   setCurrentPrize(event: Event, value: number) {
     event.preventDefault();
@@ -44,6 +51,8 @@ export class LotteryControlsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    // Khóa nút (Bắt đầu) cho tới khi hoàn thành data flow
+    this.submitting = true;
     this.numberService.generateWinningNumber({ min: this.lotterySettings.numberRandomMin, max: this.lotterySettings.numberRandomMax, forbiddenValue: this.resultNumbers }).
       then(number => {
         this.newResult = {
@@ -58,8 +67,7 @@ export class LotteryControlsComponent implements OnInit, OnDestroy {
 
   preAddNewResult(result: Result) {
     this.lotterySettingsService.setCurrentSlot(result.number)
-      .then((success) => this.dataFlowService.generatedNumber(result));
-    
+      .then((success) => this.dataFlowService.generatedNumber(result));    
   }
 
   handleError(error: Error) {
@@ -83,6 +91,7 @@ export class LotteryControlsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.lotterySettings.unsubscribe();
     this.subscriptions.results.unsubscribe();
+    this.subscriptions.dataFlow.unsubscribe();
   }
 
 }

@@ -58,7 +58,14 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
               this.glowAfterAnimateSecondDigit();
               return this.resultService.addNewResult(result)
             })
-            .catch((error: Error) => this.handleError(error));
+            // Sau khi đồng bộ trên server xong, phát tín hiệu tới Lottery-control để cho phép nút (Bắt đầu) được mở trở lại
+            .then(success => {
+              this.dataFlowService.animatedNumber(result);
+            })
+            .catch((error: Error) => {
+              this.dataFlowService.animatedNumber(result);
+              this.handleError(error)
+            });
         })
     }
   }
