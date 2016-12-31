@@ -3,8 +3,12 @@
     font-size: 2rem;
 }
 
-body {
-    background-color: tomato;
-    background: url(assets/images/sakura-01.jpg) no-repeat center center fixed; 
+// body {
+//     background: url(assets/images/sakura-01.jpg) no-repeat center center fixed;
+//     background-size: cover;
+// }
+
+.has-background-image {
+    background: url(assets/images/sakura-01.jpg) no-repeat center center fixed;
     background-size: cover;
-}
+}   
