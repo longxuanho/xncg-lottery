@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { LotterySettingsService } from '../../shared/lottery-settings.service';
 import { LotterySettings } from '../../shared/lottery-settings.model';
 
+declare var screenfull: any;
 
 @Component({
   selector: 'app-preferences-thong-tin-hien-thi',
@@ -52,6 +53,14 @@ export class PreferencesThongTinHienThiComponent implements OnInit, OnDestroy {
           this.submitting = false;
           this.toastrService.error('Cập nhật thông tin người dùng thất bại', 'Opps!');
         });
+  }
+
+  toggleFullScreen() {
+    if (screenfull.enabled) {
+      screenfull.toggle();
+    } else {
+      this.toastrService.error('Xin lỗi, thiết bị của bạn không hỗ trợ chế độ Fullscreen.', 'Opps!');
+    }
   }
 
   handleError(error: Error) {

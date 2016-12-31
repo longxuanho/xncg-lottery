@@ -4,7 +4,6 @@ import { ResultService } from './shared/result.service';
 
 import { Subscription } from 'rxjs/Subscription';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

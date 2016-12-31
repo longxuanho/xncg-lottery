@@ -1,4 +1,8 @@
 <div class="container mt-2 mb-2">
+  <div class="text-xs-right">
+    <button type="button" class="btn btn-outline-success mt-1 mb-1" (click)="toggleFullScreen()">Toàn màn hình</button>
+  </div>
+  
   <form [formGroup]="thongTinHienThiForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="inputDonViToChuc">Đơn vị tổ chức</label>
