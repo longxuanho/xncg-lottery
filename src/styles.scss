@@ -13,6 +13,14 @@
     background-size: cover;
 }
 
+// Extra small devices (portrait phones, less than 544px)
+@media (max-width: 543px) { 
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 .neon {
   background-color: #222222;
   background: repeating-linear-gradient(45deg, #2b2b2b 0%, #2b2b2b 10%, #222222 0%, #222222 50%) 0 / 15px 15px;

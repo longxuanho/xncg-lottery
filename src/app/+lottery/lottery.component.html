@@ -1,18 +1,23 @@
-<div class="row mt-2">
-  <div class="col-xs-12 clearfix">
-    <h3 class="d-inline-block">Bắt đầu vòng quay</h3>
-    <a class="btn btn-outline-primary float-xs-right" href="" [routerLink]="['/ket-qua']">Kết quả</a>
+<div class="anti-background">
+  <div class="row mt-2">
+    <div class="col-xs-12">
+       <div class="clearfix">
+         <h3 class="d-inline-block ml-1">Bắt đầu vòng quay</h3>
+          <a class="btn btn-outline-primary float-xs-right mr-1" href="" [routerLink]="['/ket-qua']">Kết quả</a>
+       </div>      
+    </div>
   </div>
+  <hr/>
+
+  <app-lottery-result-list-preview></app-lottery-result-list-preview>
+  <hr/>
+
+  <app-lottery-number-slots></app-lottery-number-slots>
+  <hr/>
+
+  <app-lottery-controls></app-lottery-controls>
 </div>
-<hr/>
 
-<app-lottery-result-list-preview></app-lottery-result-list-preview>
-<hr/>
-
-<app-lottery-number-slots></app-lottery-number-slots>
-<hr/>
-
-<app-lottery-controls></app-lottery-controls>
 
 
 

@@ -50,21 +50,16 @@ export class LotteryControlsComponent implements OnInit, OnDestroy {
           prize: this.lotterySettings.displayCurrentPrize,
           number: number
         }
-        // Forward result tới lottery-number-slots để animate trước khi lưu
+        // Cập nhật currentSlot Setting và forward result tới lottery-number-slots để animate trước khi lưu
         this.preAddNewResult(this.newResult);
-        // this.addNewResult(this.newResult);      
       })
       .catch((error: Error) => this.toastrService.error(error.message));
   }
 
   preAddNewResult(result: Result) {
-    this.dataFlowService.generatedNumber(result);
-  }
-
-  addNewResult(newResult: Result) {
-    this.resultService.addNewResult(newResult)
-      .then(success => this.lotterySettingsService.setCurrentSlot(newResult.number))
-      .catch((error: Error) => this.handleError(error));
+    this.lotterySettingsService.setCurrentSlot(result.number)
+      .then((success) => this.dataFlowService.generatedNumber(result));
+    
   }
 
   handleError(error: Error) {

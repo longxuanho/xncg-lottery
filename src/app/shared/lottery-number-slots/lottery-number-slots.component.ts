@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { LotterySettingsService } from '../../shared/lottery-settings.service';
@@ -18,9 +18,11 @@ import { Result } from '../result.model';
 })
 export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
 
+  @Input() listener: boolean        // Nếu listener là true -> widget được sử dụng và đồng bộ tại +dashboard, ta phải subscribe một sự kiện khác trong ctor
+
   subscriptions: {
     lotterySettings?: Subscription,
-    dataFlow?: Subscription
+    dataFlow?: Subscription,
   } = {}
   lotterySettings: LotterySettings;
   currentSlot: { firstDigit: AnimateDigit, secondDigit: AnimateDigit };
@@ -41,22 +43,24 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
     private resultService: ResultService,
 
   ) {
-    this.subscriptions.dataFlow = this.dataFlowService.numberGenerated$
-      .subscribe((result: Result) => {
-        this.currentSlot = this.numberService.resolveNumberDigits(result.number);
-        this.animateFirstDigit(this.currentSlot.firstDigit)
-          .then(success => {
-            this.glowAfterAnimateFirstDigit();
-            return this.animateSecondDigit(this.currentSlot.secondDigit);
-          })
-          // Sau khi animate xong -> đẩy dữ liệu lên server để đồng bộ
-          .then(success => {
-            this.glowAfterAnimateSecondDigit();
-            return this.resultService.addNewResult(result) 
-          })
-          .then(success => this.lotterySettingsService.setCurrentSlot(result.number))
-          .catch((error: Error) => this.handleError(error));
-      })
+    // Nếu widget này được dùng trong module +Lottery
+    if (!this.listener) {           
+      this.subscriptions.dataFlow = this.dataFlowService.numberGenerated$
+        .subscribe((result: Result) => {
+          this.currentSlot = this.numberService.resolveNumberDigits(result.number);
+          this.animateFirstDigit(this.currentSlot.firstDigit)
+            .then(success => {
+              this.glowAfterAnimateFirstDigit();
+              return this.animateSecondDigit(this.currentSlot.secondDigit);
+            })
+            // Sau khi animate xong -> đẩy dữ liệu lên server để đồng bộ
+            .then(success => {
+              this.glowAfterAnimateSecondDigit();
+              return this.resultService.addNewResult(result)
+            })
+            .catch((error: Error) => this.handleError(error));
+        })
+    }
   }
 
   animateFirstDigit(animateObject: AnimateDigit) {
@@ -78,7 +82,7 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
 
   glowAfterAnimateFirstDigit() {
     // Sau khi animate xong digit 1 -> bật hiệu ứng neon cho digit 1
-    this.hasNeonEffect1 = true; 
+    this.hasNeonEffect1 = true;
   }
 
   animateSecondDigit(animateObject: AnimateDigit) {
@@ -101,10 +105,10 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
   glowAfterAnimateSecondDigit() {
     // Sau khi animate xong digit 2 -> bật hiệu ứng neon cho digit 2, delay một khoảng thời gian rồi tắt hiệu ứng cả digit 1 và 2
     this.hasNeonEffect2 = true;
-      setTimeout(() => {
-        this.hasNeonEffect2 = false;
-        this.hasNeonEffect1 = false;
-      }, this.neonEffectDuration);   
+    setTimeout(() => {
+      this.hasNeonEffect2 = false;
+      this.hasNeonEffect1 = false;
+    }, this.neonEffectDuration);
   }
 
   handleError(error: Error) {
@@ -115,7 +119,24 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.lotterySettings = this.lotterySettingsService.getSettings()
       .subscribe(
-        (value: LotterySettings) => this.lotterySettings = value,
+        (value: LotterySettings) => {
+          if (this.lotterySettings && this.lotterySettings.displayCurrentSlot !== value.displayCurrentSlot) {
+            // Nếu widget này được dùng trong module Dashboard -> check để cập nhật animation
+            if (this.listener) {
+              
+              this.currentSlot = this.numberService.resolveNumberDigits(value.displayCurrentSlot);
+              this.animateFirstDigit(this.currentSlot.firstDigit)
+                .then(success => {
+                  this.glowAfterAnimateFirstDigit();
+                  return this.animateSecondDigit(this.currentSlot.secondDigit);
+                })
+                .then(success =>this.glowAfterAnimateSecondDigit())
+                .catch((error: Error) => this.handleError(error));
+
+            }
+          }
+          this.lotterySettings = value
+        },
         error => this.handleError(error)
       );
   }

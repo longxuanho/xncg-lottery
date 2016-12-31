@@ -5,7 +5,16 @@
     <app-lottery-result-list-preview></app-lottery-result-list-preview>
     <hr/>
 
-    <app-lottery-number-slots></app-lottery-number-slots>
+    <div class="row mt-2 mb-2" *ngIf="currentPrizeText">
+        <h3 class="text-xs-center" 
+            [ngClass]="{
+                'text-success': lotterySettings.displayCurrentPrize===3,
+                'text-warning': lotterySettings.displayCurrentPrize===2,
+                'text-danger': lotterySettings.displayCurrentPrize===1
+            }">{{currentPrizeText}}</h3>
+    </div>
+
+    <app-lottery-number-slots [listener]="true"></app-lottery-number-slots>
     <hr/>
 </div>
 

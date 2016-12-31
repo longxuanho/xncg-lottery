@@ -44,8 +44,7 @@ export class LotterySettingsService {
 
   setCurrentSlot(value: number) {
     const uid = this.authService.getAuth().data.uid;
-    this.af.database.object(lotterySettingsRef + `/${uid}`).update({ displayCurrentSlot: value })
-      .catch(error => this.handleError(error));
+    return this.af.database.object(lotterySettingsRef + `/${uid}`).update({ displayCurrentSlot: value });    
   }
 
   getCurrentSlot() {
