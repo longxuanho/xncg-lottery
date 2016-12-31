@@ -1,24 +1,26 @@
 import { Injectable } from '@angular/core';
 import { AngularFire } from 'angularfire2';
-import { LotterySettingsService } from '../../shared/lottery-settings.service';
-import { LotterySettings } from '../../shared/lottery-settings.model';
 import { NumberSlot } from './number.model';
 import * as _ from 'lodash';
 
 @Injectable()
 export class NumberService {
 
-  lotterySettings: { data?: LotterySettings }; 
-
   constructor(
     private af: AngularFire,
-    private lotterySettingsService: LotterySettingsService
-  ) { 
-    this.lotterySettings = this.lotterySettingsService.getSettings();
+  ) {
   }
 
-  generateWinningNumber(): number {
-    return _.random(this.lotterySettings.data.numberRandomMin, this.lotterySettings.data.numberRandomMax);
+  generateWinningNumber(options: { min: number; max: number; forbiddenValue: number[] } = { min: 0, max: 99, forbiddenValue: [] }): Promise<number> {
+    return new Promise((resolve, reject) => {
+      let allowedValue = _.difference(_.range(options.min, options.max + 1), options.forbiddenValue);
+      if (allowedValue.length) {
+        let selectedIndex = _.random(0, allowedValue.length - 1);
+        resolve(allowedValue[selectedIndex]);
+      } else {
+        reject(new Error('Không còn giá trị số ngẫu nhiên trong khoảng giới hạn được chọn. Vui lòng điều chỉnh lại thiết lập của bạn.'));
+      }
+    });
   }
 
   resolveNumberDigits(value: number): NumberSlot {

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { LotterySettingsService } from '../../shared/lottery-settings.service';
+import { LotterySettings } from '../../shared/lottery-settings.model';
 import { NumberService } from '../shared/number.service';
 import { NumberSlot } from '../shared/number.model'
 import { ToastrService } from 'toastr-ng2';
@@ -15,9 +16,10 @@ import { ToastrService } from 'toastr-ng2';
 export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
 
   subscriptions: {
-    currentSlot?: Subscription
+    lotterySettings?: Subscription
   } = { }
-  currentSlot: NumberSlot
+  lotterySettings: LotterySettings;
+  currentSlot: NumberSlot;
 
   constructor(
     private lotterySettingsService: LotterySettingsService,
@@ -31,15 +33,18 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscriptions.currentSlot = this.lotterySettingsService.getCurrentSlot()
+    this.subscriptions.lotterySettings = this.lotterySettingsService.getSettings()
       .subscribe(
-        value => this.currentSlot = this.numberService.resolveNumberDigits(value),
+        value => {
+          this.lotterySettings = value;
+          this.currentSlot = this.numberService.resolveNumberDigits(this.lotterySettings.displayCurrentSlot);
+        },
         error => this.handleError(error)
       );
   }
 
   ngOnDestroy() {
-      this.subscriptions.currentSlot.unsubscribe();
+      this.subscriptions.lotterySettings.unsubscribe();
   }
 
 }

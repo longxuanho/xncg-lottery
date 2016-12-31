@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ResultService } from '../../shared/result.service';
-import { LotterySettingsService } from '../../shared/lottery-settings.service';
 import { Result } from '../../shared/result.model';
 import { ToastrService } from 'toastr-ng2';
 import { Subscription } from 'rxjs/Subscription';
@@ -18,12 +17,12 @@ export class LotteryResultListPreviewComponent implements OnInit, OnDestroy {
   results: { [key: string]: Result[] } = {};
   hasResult: boolean = false;
   subscriptions: {
-    results?: Subscription
+    results?: Subscription,
+    lotterySettings?: Subscription
   } = { }
 
   constructor(
     private resultService: ResultService,
-    private lotterySettingsService: LotterySettingsService,
     private toastrService: ToastrService,
   ) { }
 

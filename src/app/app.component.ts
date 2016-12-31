@@ -12,23 +12,14 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  subscriptions: {
-    settings?: Subscription,
-    results?: Subscription
-  } = {}
-
   constructor(
     private lotterySettingsService: LotterySettingsService,
     private resultService: ResultService
   ) { }
 
   ngOnInit() {
-    this.subscriptions.settings = this.lotterySettingsService.syncSettings();
-    this.subscriptions.results = this.resultService.syncCurrentResults();
   }
 
   ngOnDestroy() {
-    this.subscriptions.settings.unsubscribe();
-    this.subscriptions.results.unsubscribe();
   }
 }

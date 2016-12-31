@@ -17,16 +17,8 @@ export class LotterySettingsService {
     private toastrService: ToastrService
   ) { }
 
-  syncSettings() {
-    return this.af.database.object(lotterySettingsRef)
-      .subscribe(
-      data => this.lotterySettings.data = <LotterySettings>data,
-      error => this.handleError(error),
-      () => console.log('Truy vấn settings: complete'));
-  }
-
   getSettings() {
-    return this.lotterySettings;
+    return this.af.database.object(lotterySettingsRef);
   }
 
   setCurrentPrize(value: number) {
