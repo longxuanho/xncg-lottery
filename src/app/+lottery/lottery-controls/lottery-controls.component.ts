@@ -48,7 +48,7 @@ export class LotteryControlsComponent implements OnInit, OnDestroy {
           prize: this.lotterySettings.displayCurrentPrize,
           number: number
         }
-        this.addNewResult(this.newResult);
+        this.addNewResult(this.newResult);      
       })
       .catch((error: Error) => this.toastrService.error(error.message));
   }

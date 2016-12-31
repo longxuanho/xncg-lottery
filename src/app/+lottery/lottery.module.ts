@@ -10,6 +10,8 @@ import { LotteryRoutingModule, routedComponents } from './lottery-routing.module
     LotteryRoutingModule
   ],
   providers: [],
-  declarations: [routedComponents]
+  declarations: [
+    routedComponents,
+  ]
 })
 export class LotteryModule { }

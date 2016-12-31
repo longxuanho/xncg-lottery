@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFire } from 'angularfire2';
-import { NumberSlot } from './number.model';
+import { NumberSlot, AnimateDigit } from './number.model';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -23,11 +23,15 @@ export class NumberService {
     });
   }
 
-  resolveNumberDigits(value: number): NumberSlot {
+  resolveNumberDigits(value: number): { firstDigit: AnimateDigit, secondDigit: AnimateDigit } {
+    const timeRange_lower = 1000;
+    const timeRange_upper = 5000;
     if (value >= 0 && value <= 99) {
-      return { firstDigit: Math.floor(value / 10), secondDigit: value % 10 }
+      let firstDigit: AnimateDigit = { targetDigit: Math.floor(value / 10), minAnimanateTime: _.random(timeRange_lower, timeRange_upper) };
+      let secondDigit: AnimateDigit = { targetDigit: value % 10, minAnimanateTime: _.random(timeRange_lower, timeRange_upper) }
+      
+      return { firstDigit, secondDigit }
     }
-    return { firstDigit: 0, secondDigit: 0 }
+    return { firstDigit: { targetDigit: 0, minAnimanateTime: timeRange_lower }, secondDigit: { targetDigit: 0, minAnimanateTime: timeRange_lower } }
   }
-
 }

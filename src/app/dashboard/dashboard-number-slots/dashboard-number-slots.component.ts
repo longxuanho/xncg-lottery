@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { LotterySettingsService } from '../../shared/lottery-settings.service';
 import { LotterySettings } from '../../shared/lottery-settings.model';
 import { NumberService } from '../../shared/number.service';
-import { NumberSlot } from '../../shared/number.model'
+import { AnimateDigit } from '../../shared/number.model'
 import { ToastrService } from 'toastr-ng2';
 
 @Component({
@@ -18,7 +18,7 @@ export class DashboardNumberSlotsComponent implements OnInit, OnDestroy {
     lotterySettings?: Subscription
   } = { }
   lotterySettings: LotterySettings;
-  currentSlot: NumberSlot;
+  currentSlot: { firstDigit: AnimateDigit, secondDigit: AnimateDigit };
 
   constructor(
     private lotterySettingsService: LotterySettingsService,

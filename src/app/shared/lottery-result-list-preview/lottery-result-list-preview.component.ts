@@ -26,6 +26,17 @@ export class LotteryResultListPreviewComponent implements OnInit, OnDestroy {
     private toastrService: ToastrService,
   ) { }
 
+  resolveResult(rawData: Result[]) {
+    if (rawData && rawData.length) {
+      this.results = _.groupBy(rawData, 'prize');
+      this.hasResult = true;
+    } else {
+      this.results = {};
+      this.hasResult = false;
+    }   
+  }
+  
+
   handleError(error: Error) {
     console.log(`${error.message}: ${error.stack}`);
     this.toastrService.error(error.message, 'Đồng bộ thiết lập thất bại');
@@ -34,14 +45,17 @@ export class LotteryResultListPreviewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.results = this.resultService.getResults()      
       .subscribe(
-        results => {
-          if (results && results.length) {
-            this.results = _.groupBy(results, 'prize');
-            this.hasResult = true;
+        (value: Result[]) => {
+          if (_.isEmpty(this.results)) {
+            this.resolveResult(value);
           } else {
-            this.results = {};
-            this.hasResult = false;
-          }            
+            // Chờ 15s để hoàn thành animate sau đó mới hiển thị kết quả
+            setTimeout(() => {
+              this.resolveResult(value);
+            }, 15000); 
+          }
+
+                            
         },
         (errors: Error) => this.handleError(errors)
       )
