@@ -28,27 +28,36 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   handleError(error: Error) {
-    console.log(`${error.message}: ${error.stack}`);
-    this.toastrService.error(error.message, 'Đồng bộ thiết lập thất bại');
+    // console.log(`${error.message}: ${error.stack}`);
+    // this.toastrService.error(error.message, 'Ngắt kết nối tới server...');
+    this.subscriptions.lotterySettings.unsubscribe();
   }
 
-  ngOnInit() {  
+  ngOnInit() {
     this.subscriptions.lotterySettings = this.lotterySettingsService.getSettings()
       .subscribe(
-        (value: LotterySettings) => {
-          this.lotterySettings = value;
+      (value: LotterySettings) => {
+        this.lotterySettings = value;
+        if (this.lotterySettings) {
+          $('body').removeClass('has-background-image-1 has-background-image-2 has-background-image-3 has-background-image-4 has-background-image-5');
+          $('body').addClass(this.lotterySettings.displayBackgroundImage);
           this.currentPrizeText = this.resultService.resolvePrizeText(this.lotterySettings.displayCurrentPrize);
-        },
-        error => this.handleError(error));  
+        }
+
+      },
+      error => this.handleError(error));
   }
 
   ngAfterViewInit() {
-    $('body').addClass('has-background-image');
+    // if (this.lotterySettings)
+    //   $('body').addClass(this.lotterySettings.displayBackgroundImage);
   }
 
 
   ngOnDestroy() {
-    $('body').removeClass('has-background-image');
+    if (this.lotterySettings)
+      $('body').removeClass('has-background-image-1 has-background-image-2 has-background-image-3 has-background-image-4 has-background-image-5');
+    this.subscriptions.lotterySettings.unsubscribe();
   }
 
 }

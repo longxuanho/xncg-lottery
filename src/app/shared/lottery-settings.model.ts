@@ -4,20 +4,21 @@ export class LotterySettings {
     resultMaxCount: number;             // Giới hạn số kết quả trả về khi truy vấn tại firebase
 
     
-    displayCurrentSlot: number;         // Số hiển thị lớn trên slot quay số tại (Bảng tin) và (Quay số)
-    displayCurrentPrize: number;        // Giải thưởng hiện tại phần (Quay số)
-    displayMainTitle: string;           // Title chào mừng tại (Bảng tin)  
-    displaySubtitle: string;            // Subtitle chào mừng tại (Bảng tin)
-    displayHostName: string;            // Tên đơn vị tổ chức hiển thị trên (Bảng tin)
-    displayHostLogoUrl?: string;        // Logo url của đơn vị tổ chức hiển thị trên (Bảng tin)
+    displayCurrentSlot: number;             // Số hiển thị lớn trên slot quay số tại (Bảng tin) và (Quay số)
+    displayCurrentPrize: number;            // Giải thưởng hiện tại phần (Quay số)
+    displayMainTitle: string;               // Title chào mừng tại (Bảng tin)  
+    displaySubtitle: string;                // Subtitle chào mừng tại (Bảng tin)
+    displayHostName: string;                // Tên đơn vị tổ chức hiển thị trên (Bảng tin)
+    displayHostLogoUrl?: string;            // Logo url của đơn vị tổ chức hiển thị trên (Bảng tin)
     displayThongTinGiaiThuong: boolean;
     displayThongTinGiaiThuong_GiaiNhat: string;
     displayThongTinGiaiThuong_GiaiNhi: string;
     displayThongTinGiaiThuong_GiaiBa: string;
-    displayResultsInDashBoard?: boolean  // Dashboard sẽ hiển thị bảng slots (false) quay số hay bảng tổng kết kết quả (true)?
+    displayResultsInDashBoard?: boolean;    // Dashboard sẽ hiển thị bảng slots (false) quay số hay bảng tổng kết kết quả (true)?
+    displayBackgroundImage: string;         // Hình nền của Dashboard
 
-    numberRandomMax: number;            // Giới hạn trên của thuật toán randomize
-    numberRandomMin: number;            // Giới hạn dưới của thuật toán randomize
+    numberRandomMax: number;                // Giới hạn trên của thuật toán randomize
+    numberRandomMin: number;                // Giới hạn dưới của thuật toán randomize
 }
 
 export const defaultLotterySettings: LotterySettings = {
@@ -33,6 +34,7 @@ export const defaultLotterySettings: LotterySettings = {
     displayThongTinGiaiThuong_GiaiNhi: 'Phần quà trị giá 3.000.000 VNĐ từ Ban tổ chức.',
     displayThongTinGiaiThuong_GiaiBa: 'Phần quà trị giá 1.000.000 VNĐ từ Ban tổ chức.',
     displayResultsInDashBoard: false,
+    displayBackgroundImage: 'has-background-image-1',
 
     numberRandomMax: 99,
     numberRandomMin: 0

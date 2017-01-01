@@ -3,7 +3,6 @@ import { ResultService } from '../../shared/result.service';
 import { Result } from '../../shared/result.model';
 import { ToastrService } from 'toastr-ng2';
 import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/map';
 import * as _ from 'lodash';
 
 @Component({
@@ -26,14 +25,15 @@ export class DashboardResultListPreviewComponent implements OnInit, OnDestroy {
   ) { }
 
   handleError(error: Error) {
-    console.log(`${error.message}: ${error.stack}`);
-    this.toastrService.error(error.message, 'Đồng bộ thiết lập thất bại');
+    // console.log(`${error.message}: ${error.stack}`);
+    // this.toastrService.warning(error.message, 'Ngắt kết nối tới server...');
+    this.subscriptions.results.unsubscribe();
   }
 
   ngOnInit() {
     this.subscriptions.results = this.resultService.getResults()      
       .subscribe(
-        results => {
+        (results: Result[]) => {
           if (results && results.length) {
             this.results = _.groupBy(results, 'prize');
             this.hasResult = true;

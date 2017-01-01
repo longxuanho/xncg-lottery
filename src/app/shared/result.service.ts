@@ -7,6 +7,7 @@ import { ToastrService } from 'toastr-ng2';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/empty';
 
 
 @Injectable()
@@ -27,7 +28,7 @@ export class ResultService {
             limitToLast: options.resultMaxCount
           }
         });
-      Observable.throw(new Error('Người dùng chưa đăng nhập'));
+      return Observable.empty();
     })
   }
 

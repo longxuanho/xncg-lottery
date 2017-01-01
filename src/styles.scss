@@ -8,9 +8,28 @@
   margin-top: 60px;
 }
 
-.has-background-image {
-    background: url(assets/images/sakura-01.jpg) no-repeat center center fixed;
+.has-background {  
+  &-image-1 {
+    background: url(assets/images/background-01.jpg) no-repeat center center fixed;
     background-size: cover;
+  }
+  &-image-2 {
+    background: url(assets/images/background-02.jpg) no-repeat center center fixed;
+    background-size: cover;
+  }
+  &-image-3 {
+    background: url(assets/images/background-03.jpg) no-repeat center center fixed;
+    background-size: cover;
+  }
+  &-image-4 {
+    background: url(assets/images/background-04.jpg) no-repeat center center fixed;
+    background-size: cover;
+  }
+  &-image-5 {
+    background: url(assets/images/background-05.jpg) no-repeat center center fixed;
+    background-size: cover;
+  }
+
 }
 
 // Extra small devices (portrait phones, less than 544px)

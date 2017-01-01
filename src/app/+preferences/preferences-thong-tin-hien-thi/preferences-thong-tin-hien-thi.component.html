@@ -16,6 +16,12 @@
         <label for="inputPhuDe">Phụ đề</label>
         <input type="text" class="form-control" id="inputPhuDe" placeholder="Nhập phụ đề" formControlName="displaySubtitle">
       </div>
+      <div class="form-group">
+        <label for="exampleSelect1">Hình nền bảng tin</label>
+        <select class="form-control" id="exampleSelect1" formControlName="displayBackgroundImage">
+          <option *ngFor="let i of [1, 2, 3, 4, 5]" value="has-background-image-{{i}}">Hình {{i}}</option>
+        </select>
+      </div>
       <div class="form-check">
         <label class="form-check-label">
           <input type="checkbox" class="form-check-input" formControlName="displayThongTinGiaiThuong">

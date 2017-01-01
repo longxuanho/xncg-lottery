@@ -30,14 +30,16 @@ export class DashboardResultsComponent implements OnInit, OnDestroy {
   ) { }
 
   handleError(error: Error) {
-    console.log(`${error.message}: ${error.stack}`);
-    this.toastrService.error(error.message, 'Đồng bộ thiết lập thất bại');
+    // console.log(`${error.message}: ${error.stack}`);
+    // this.toastrService.warning(error.message, 'Ngắt kết nối tới server...');
+    this.subscriptions.lotterySettings.unsubscribe();
+    this.subscriptions.results.unsubscribe();
   }
 
   ngOnInit() {
     this.subscriptions.lotterySettings = this.lotterySettingsService.getSettings()
       .subscribe(
-        value => this.lotterySettings = value,
+        (value: LotterySettings) => this.lotterySettings = value,
         error => this.handleError(error));
     this.subscriptions.results = this.resultService.getResults()
       .subscribe(

@@ -22,14 +22,15 @@ export class DashboardHeadingComponent implements OnInit, OnDestroy {
   ) { }
 
   handleError(error: Error) {
-    console.log(`${error.message}: ${error.stack}`);
-    this.toastrService.error(error.message, 'Đồng bộ thiết lập thất bại');
+    // console.log(`${error.message}: ${error.stack}`);
+    // this.toastrService.warning(error.message, 'Ngắt kết nối tới server...');
+    this.subscriptions.lotterySettings.unsubscribe();
   }
 
   ngOnInit() {
     this.subscriptions.lotterySettings = this.lotterySettingsService.getSettings()
         .subscribe(
-        settings => this.lotterySettings = settings,
+        (settings: LotterySettings) => this.lotterySettings = settings,
         error => this.handleError(error));    
    }
 

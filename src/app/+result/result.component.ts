@@ -49,7 +49,7 @@ export class ResultComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.lotterySettings = this.lotterySettingsService.getSettings()
       .subscribe(
-        value => this.lotterySettings = value,
+        (value: LotterySettings) => this.lotterySettings = value,
         error => this.handleError(error));
     this.subscriptions.results = this.resultService.getResults()
       .subscribe(

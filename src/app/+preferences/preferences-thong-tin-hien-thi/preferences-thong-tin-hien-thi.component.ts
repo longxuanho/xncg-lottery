@@ -34,6 +34,7 @@ export class PreferencesThongTinHienThiComponent implements OnInit, OnDestroy {
       displayMainTitle: this.formBuilder.control(''),
       displaySubtitle: this.formBuilder.control(''),
       displayHostName: this.formBuilder.control(''),
+      displayBackgroundImage: this.formBuilder.control(''),
       displayThongTinGiaiThuong: this.formBuilder.control(false),
       displayThongTinGiaiThuong_GiaiNhat: this.formBuilder.control(''),
       displayThongTinGiaiThuong_GiaiNhi: this.formBuilder.control(''),
@@ -71,10 +72,11 @@ export class PreferencesThongTinHienThiComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.lotterySettings = this.lotterySettingsService.getSettings()
       .subscribe(
-      settings => {
-        this.cloneLotterySettings = settings;
-        this.thongTinHienThiForm.patchValue(settings);
-      },
+        (settings: LotterySettings) => {
+          this.cloneLotterySettings = settings;
+          if (settings)
+            this.thongTinHienThiForm.patchValue(settings);
+        },
       error => this.handleError(error));    
   }
 

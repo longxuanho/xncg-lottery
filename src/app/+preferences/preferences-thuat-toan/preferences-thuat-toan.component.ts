@@ -56,7 +56,7 @@ export class PreferencesThuatToanComponent implements OnInit {
   ngOnInit() {
     this.subscriptions.lotterySettings = this.lotterySettingsService.getSettings()
       .subscribe(
-        settings => {
+        (settings: LotterySettings) => {
           this.cloneLotterySettings = settings;
           this.thuatToanForm.patchValue(settings);
         },

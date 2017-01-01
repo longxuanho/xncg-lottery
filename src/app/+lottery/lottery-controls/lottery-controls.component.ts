@@ -78,14 +78,18 @@ export class LotteryControlsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.lotterySettings = this.lotterySettingsService.getSettings()
       .subscribe(
-      value => {
+      (value: LotterySettings) => {
         this.lotterySettings = value;
-        this.currentPrizeText = this.resultService.resolvePrizeText(this.lotterySettings.displayCurrentPrize);
+        if (this.lotterySettings)
+          this.currentPrizeText = this.resultService.resolvePrizeText(this.lotterySettings.displayCurrentPrize);
       },
       error => this.handleError(error));
     this.subscriptions.results = this.resultService.getResults()
       .subscribe(
-      (results: Result[]) => this.resultNumbers = _.uniq(_.map(results, (result) => result.number)))
+      (results: Result[]) => {
+        if (results)
+          this.resultNumbers = _.uniq(_.map(results, (result) => result.number))
+      })
   }
 
   ngOnDestroy() {

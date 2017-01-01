@@ -18,9 +18,11 @@ export class LogoutComponent implements OnInit {
 
   onLogout(event) {
     event.preventDefault();
-    this.authService.logout();
-    this.toastrService.info('Bạn đã đăng xuất khỏi hệ thống', 'Bye : )');
-    this.router.navigate(['/dang-nhap']);
+    this.authService.logout()
+      .then(success => {
+        this.toastrService.info('Bạn đã đăng xuất khỏi hệ thống', 'Bye : )');
+        this.router.navigate(['/dang-nhap']);
+      });
   }
 
   ngOnInit() {

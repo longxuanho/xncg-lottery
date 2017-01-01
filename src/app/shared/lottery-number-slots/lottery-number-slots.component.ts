@@ -119,8 +119,10 @@ export class LotteryNumberSlotsComponent implements OnInit, OnDestroy {
   }
 
   handleError(error: Error) {
-    console.log(`${error.message}: ${error.stack}`);
-    this.toastrService.error(error.message, 'Đồng bộ thiết lập thất bại');
+    // console.log(`${error.message}: ${error.stack}`);
+    // this.toastrService.warning(error.message, 'Ngắt kết nối tới server...');
+    this.subscriptions.lotterySettings.unsubscribe();
+    this.subscriptions.dataFlow.unsubscribe();
   }
 
   ngOnInit() {

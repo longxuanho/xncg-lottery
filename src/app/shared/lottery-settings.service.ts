@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/observable/empty';
 
 @Injectable()
 export class LotterySettingsService {
@@ -31,7 +32,11 @@ export class LotterySettingsService {
   
   getSettings() {
     return this.authService.syncAuth()
-      .mergeMap(auth => this.af.database.object(lotterySettingsRef  + `/${auth.uid}`))
+      .mergeMap(auth => {
+        if (auth && auth.uid)
+          return this.af.database.object(lotterySettingsRef  + `/${auth.uid}`)
+        return Observable.empty();
+      })
     // const uid = this.authService.getAuth().data.uid;
     // return this.af.database.object(lotterySettingsRef  + `/${uid}`);
   }
