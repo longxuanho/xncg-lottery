@@ -71,8 +71,11 @@ export class LotteryControlsComponent implements OnInit, OnDestroy {
   }
 
   handleError(error: Error) {
-    console.log(`${error.message}: ${error.stack}`);
-    this.toastrService.error(error.message, 'Đồng bộ thiết lập thất bại');
+    // console.log(`${error.message}: ${error.stack}`);
+    // this.toastrService.warning(error.message, 'Ngắt kết nối từ server...');
+    this.subscriptions.lotterySettings.unsubscribe();
+    this.subscriptions.results.unsubscribe();
+    this.subscriptions.dataFlow.unsubscribe();
   }
 
   ngOnInit() {

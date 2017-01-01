@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscriptions.auth = this.authService.syncAuth().subscribe(auth => {
       console.log(auth)
       if (auth && auth.uid) 
-        this.router.navigate(['/bang-tin']);
+        this.router.navigate(['/quay-so']);
     })
   }
 

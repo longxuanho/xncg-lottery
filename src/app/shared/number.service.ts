@@ -25,7 +25,7 @@ export class NumberService {
 
   resolveNumberDigits(value: number): { firstDigit: AnimateDigit, secondDigit: AnimateDigit } {
     const timeRange_lower = 1000;
-    const timeRange_upper = 8000;
+    const timeRange_upper = 6000;
     if (value >= 0 && value <= 99) {
       let firstDigit: AnimateDigit = { targetDigit: Math.floor(value / 10), minAnimanateTime: _.random(timeRange_lower, timeRange_upper) };
       let secondDigit: AnimateDigit = { targetDigit: value % 10, minAnimanateTime: _.random(timeRange_lower, timeRange_upper) }
