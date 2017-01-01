@@ -1,4 +1,4 @@
-export const currentResultsRef = '/lottery/results';    // Đường dẫn tới data trên firebase
+export const resultsRef = '/lottery/results';    // Đường dẫn tới data trên firebase
 
 
 export enum Prizes {

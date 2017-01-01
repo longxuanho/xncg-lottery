@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Prizes } from './result.model';
-import { AngularFire } from 'angularfire2';
-import { Result, currentResultsRef } from '../shared/result.model';
+import { AngularFire, AngularFireAuth } from 'angularfire2';
+import { AuthService } from '../core/shared/auth.service';
+import { Result, resultsRef } from '../shared/result.model';
 import { ToastrService } from 'toastr-ng2';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
@@ -11,24 +14,41 @@ export class ResultService {
 
   constructor(
     private af: AngularFire,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private authService: AuthService
   ) { 
   }
 
   getResults(options: { resultMaxCount: number } = { resultMaxCount: 30 }) {
-    return this.af.database.list(currentResultsRef, { 
-        query: {
-          limitToLast: options.resultMaxCount
-        }
-      });
+    return this.af.auth.mergeMap((auth) => {
+      if (auth && auth.uid)
+        return this.af.database.list(resultsRef + `/${auth.uid}`, {
+          query: {
+            limitToLast: options.resultMaxCount
+          }
+        });
+      Observable.throw(new Error('Người dùng chưa đăng nhập'));
+    })
   }
 
   addNewResult(newResult: Result) {
-    return this.af.database.list(currentResultsRef).push(newResult);
+    if (this.authService.auth.data) {
+      const uid = this.authService.auth.data.uid;
+      return this.af.database.list(resultsRef + `/${uid}`).push(newResult)
+        .then(success => new Promise((resolve, reject) => resolve()))
+        .catch(error => new Promise((resolve, reject) => reject(new Error(`Tạo mới thất bại. ${error.message}`))));
+    }
+    return new Promise((resolve, reject) => reject(new Error('Người dùng chưa đăng nhập')));
   }
 
   resetResults() {
-    return this.af.database.list(currentResultsRef).remove();
+    if (this.authService.auth.data) {
+      const uid = this.authService.auth.data.uid;
+      return this.af.database.list(resultsRef + `/${uid}`).remove()
+        .then(success => new Promise((resolve, reject) => resolve()))
+        .catch(error => new Promise((resolve, reject) => reject(new Error(`Reset thất bại. ${error.message}`))));
+    }
+    return new Promise((resolve, reject) => reject(new Error('Người dùng chưa đăng nhập')));
   }
 
   resolvePrizeText(value: number): string {
